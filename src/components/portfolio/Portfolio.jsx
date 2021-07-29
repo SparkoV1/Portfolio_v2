@@ -2,67 +2,44 @@ import { useEffect, useState } from "react";
 import PortfolioList from "../portfolioList/PortfolioList";
 import "./portfolio.scss";
 import {
-    featuredPortfolio,
+    reactPortfolio,
     webPortfolio,
-    mobilePortfolio,
-    designPortfolio,
-    contentPortfolio,
 } from "../../data";
 
 export default function Portfolio() {
-    const [selected, setSelected] = useState("featured");
+    //!------------------ For future -----------------
+    const [selected, setSelected] = useState("web");
     const [data, setData] = useState([]);
     const list = [
-        {
-            id: "featured",
-            title: "Featured",
-        },
         {
             id: "web",
             title: "Web App",
         },
         {
-            id: "mobile",
-            title: "Mobile App",
-        },
-        {
-            id: "design",
-            title: "Design",
-        },
-        {
-            id: "content",
-            title: "Content",
+            id: "react",
+            title: "React App",
         },
     ];
-
     useEffect(() => {
         switch (selected) {
-            case "featured":
-                setData(featuredPortfolio);
-                break;
             case "web":
                 setData(webPortfolio);
                 break;
-            case "mobile":
-                setData(mobilePortfolio);
-                break;
-            case "design":
-                setData(designPortfolio);
-                break;
-            case "content":
-                setData(contentPortfolio);
+            case "react":
+                setData(reactPortfolio);
                 break;
             default:
-                setData(featuredPortfolio);
+                setData(webPortfolio);
         }
     }, [selected]);
-
+    //!----------------------------------------
     return (
         <div className="portfolio" id="portfolio">
             <h1>Portfolio</h1>
             <ul>
                 {list.map((item) => (
                     <PortfolioList
+                        key={item.id}
                         title={item.title}
                         active={selected === item.id}
                         setSelected={setSelected}
@@ -72,12 +49,13 @@ export default function Portfolio() {
             </ul>
             <div className="container">
                 {data.map((d) => (
-                    <div className="item">
+                    <div className="item" key={d.id}>
                         <img
                             src={d.img}
                             alt=""
                         />
-                        <h3>{d.title}</h3>
+                        <a href={d.link} rel="noreferrer" target="_blank">{d.title}</a>
+
                     </div>
                 ))}
             </div>
